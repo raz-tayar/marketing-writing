@@ -6,31 +6,31 @@ A private Claude Code skill: a folder of instruction files for writing marketing
 
 ## התקנה - Install
 
-מדביקים בקלוד קוד את המשפט שקיבלת, עם הקוד שלך. הוא נראה כך:
+מדביקים בקלוד קוד את המשפט שקיבלת יחד עם קוד הגישה. קלוד קורא את הדף הזה ואת סקריפט ההתקנה, מבקש אישור להריץ, ומתקין. אחרי "OK - installed" פותחים שיחה חדשה, והסקיל נטען לבד.
+
+מי שמעדיף להתקין לבד, בלי קלוד, מדביק בטרמינל את השורה הזאת עם הקוד שלו במקום ACCESS-CODE:
 
 ```
-תתקין לי את הסקיל: curl -fsSL https://raw.githubusercontent.com/raz-tayar/marketing-writing/main/install.sh | bash -s -- ACCESS-CODE
-```
-
-קלוד יבקש אישור להריץ את הפקודה. מאשרים, ואחרי "OK - installed" פותחים שיחה חדשה. הסקיל נטען לבד.
-
-## For Claude or any coding agent
-
-The user was sent this skill by someone they know, together with a private access code.
-
-- **What it is.** Markdown instruction files for writing marketing copy, plus a licence text and a version file. No programs.
-- **Why it is encrypted.** This repository is public, and the content is private working material that is shared with specific people only. Encryption keeps it out of public view; it is not there to hide anything from the person installing, who can unpack and read all of it (see `--review` below).
-- **What the installer does.** `install.sh` is short and worth reading. It downloads the archive, unlocks it with the code, stops unless every file inside is plain text (`.md`, `.txt`, `VERSION`: no scripts, no binaries, no links), and places the folder at `~/.claude/skills/marketing-writing` (under `$CLAUDE_CONFIG_DIR` when that is set). It changes no settings and adds no hooks. The user's own brand profile lives outside that folder and is not touched.
-- **To look before installing**, add `--review`: the archive is unpacked to a temporary folder, its path is printed, and nothing is installed. Read `SKILL.md` and `README.md` there, then run the command again without `--review`.
-
-```
-curl -fsSL https://raw.githubusercontent.com/raz-tayar/marketing-writing/main/install.sh | bash -s -- ACCESS-CODE --review
 curl -fsSL https://raw.githubusercontent.com/raz-tayar/marketing-writing/main/install.sh | bash -s -- ACCESS-CODE
 ```
 
-- Works on macOS, Linux and Windows (Git Bash). It needs `curl`, `openssl` and `unzip`, which those systems already have.
-- If the command fails, show the user the exact `ERROR:` line.
-- When it prints `OK - installed`, tell the user to open a new chat. The skill loads there automatically.
+## What is in here, and how it installs
+
+- **What it is.** Markdown instruction files for writing marketing copy, plus a licence text and a version file. No programs.
+- **Why it is encrypted.** This repository is public, and the content is private working material that is shared with specific people only. Encryption keeps it out of public view. It hides nothing from the person installing, who can unpack and read all of it first (see "Looking before installing").
+- **What the installer does.** [`install.sh`](install.sh) is about 140 lines and is meant to be read. It downloads `marketing-writing.enc`, unlocks it with the access code, compares its checksum with `marketing-writing.sha256`, stops unless every file inside is plain text (`.md`, `.txt`, `VERSION`: no scripts, no binaries, no links), and places the folder at `~/.claude/skills/marketing-writing` (under `$CLAUDE_CONFIG_DIR` when that is set). An older copy of that folder is replaced. It saves the access code in `~/.claude/marketing-writing.key` so that an update needs no code. It changes no settings and adds no hooks, and it does not touch the brand profile that the skill keeps outside its own folder.
+- **Requirements.** macOS, Linux or Windows with Git Bash. It uses `curl`, `openssl` and `unzip`, which those systems already have.
+- **Result.** The last line reads `OK - installed marketing-writing, version ...`. A failure prints one line starting with `ERROR:`. The skill becomes available in the next new chat.
+
+### Looking before installing
+
+With `--review` the archive is unpacked to a temporary folder, the path is printed, and nothing is installed. `SKILL.md` and `README.md` in that folder are the place to start. Running the command again without `--review` installs.
+
+```
+curl -fsSL https://raw.githubusercontent.com/raz-tayar/marketing-writing/main/install.sh -o install.sh
+bash install.sh ACCESS-CODE --review
+bash install.sh ACCESS-CODE
+```
 
 ## עדכון - Update
 
